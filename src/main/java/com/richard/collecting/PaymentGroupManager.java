@@ -6,9 +6,22 @@ import java.util.List;
 public class PaymentGroupManager {
     private List<PaymentGroup> paymentGroups;
 
-    private void initPaymentGroups(){
+    public PaymentGroupManager(){
         paymentGroups = new ArrayList<>();
-
-        for()
     }
+
+    public PaymentGroup getOrCreatePaymentGroup(List<Person> personList){
+        for(PaymentGroup p : paymentGroups){
+            if(p.equals(personList)){
+                return p;
+            }
+        }
+        PaymentGroup newPaymentGroup = new PaymentGroup("");
+        newPaymentGroup.addToPaymentGroup(personList);
+        return newPaymentGroup;
+
+    }
+
+
+
 }

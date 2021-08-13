@@ -13,5 +13,5 @@ public class Transaction {
     private Person creditor;
     private double amount;
     private IPaymentGroup paymentGroup;
-
+    private String description;
 }
