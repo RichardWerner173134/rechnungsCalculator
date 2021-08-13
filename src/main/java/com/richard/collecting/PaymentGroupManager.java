@@ -11,13 +11,14 @@ public class PaymentGroupManager {
     }
 
     public PaymentGroup getOrCreatePaymentGroup(List<Person> personList){
-        for(PaymentGroup p : paymentGroups){
-            if(p.equals(personList)){
-                return p;
+        for(PaymentGroup pg : paymentGroups){
+            if(pg.isSamePaymentGroup(personList)){
+                return pg;
             }
         }
         PaymentGroup newPaymentGroup = new PaymentGroup("");
         newPaymentGroup.addToPaymentGroup(personList);
+        paymentGroups.add(newPaymentGroup);
         return newPaymentGroup;
 
     }

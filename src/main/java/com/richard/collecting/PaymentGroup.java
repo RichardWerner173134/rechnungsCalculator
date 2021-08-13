@@ -36,20 +36,12 @@ public class PaymentGroup implements IPaymentGroup {
         personList.remove(person);
     }
 
-    @Override
-    public boolean equals(Object obj) {
-
-        if(obj == null) return false;
-
-        if(!(obj instanceof PaymentGroup)) return false;
-
-        PaymentGroup paymentGroup = (PaymentGroup) obj;
-
-        if(this.getPersonList().containsAll((Collection<?>) paymentGroup.getPersonList())
-                && ((Collection<?>) paymentGroup.getPersonList()).containsAll(this.getPersonList())){
-            return true;
-        }
-
-        return false;
+    public boolean isSamePaymentGroup(List<Person> persons){
+        return persons.containsAll(this.personList) && this.personList.containsAll(persons);
     }
+
+    public boolean isSamePaymentGroup(PaymentGroup paymentGroup){
+        return paymentGroup.getPersonList().containsAll(this.personList) && this.personList.containsAll(paymentGroup.getPersonList());
+    }
+
 }
