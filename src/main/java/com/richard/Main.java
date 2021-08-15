@@ -2,11 +2,10 @@ package com.richard;
 
 import com.richard.calculating.BillCollection;
 import com.richard.calculating.Calculator;
-import com.richard.collecting.InvoiceOverview;
-import com.richard.collecting.PaymentGroup;
-import com.richard.collecting.Person;
-import com.richard.collecting.Transaction;
+import com.richard.collecting.*;
+import com.richard.parser.InvoiceReader;
 
+import java.io.IOException;
 import java.util.*;
 
 public class Main {
@@ -74,7 +73,15 @@ public class Main {
 
     private void collecting(){
 
-        Transaction t1 = new Transaction();
+        InvoiceReader invoiceReader;
+        invoiceReader = new InvoiceReader(invoiceOverview);
+        try {
+            invoiceReader.readAndConvertFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        /*Transaction t1 = new Transaction();
         t1.setAmount(20.00);
         t1.setCreditor(richard);
         t1.setDescription("bierkiste");
@@ -87,6 +94,6 @@ public class Main {
         t2.setPaymentGroup(invoiceOverview.getPaymentGroupManager().getOrCreatePaymentGroup(Arrays.asList(paul, richard, thomas, lennart, fabian)));
 
         invoiceOverview.addTransaction(t1);
-        invoiceOverview.addTransaction(t2);
+        invoiceOverview.addTransaction(t2);*/
     }
 }
