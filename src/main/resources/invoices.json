@@ -66,6 +66,63 @@
                 "Paul",
                 "Lennart"
             ]
+        },
+        {
+            "creditor":"Lennart",
+            "amount":51.08,
+            "currency": 0,
+            "description":"Kaufland-Einkauf 1",
+            "paymentGroup":[
+                "Richard",
+                "Thomas",
+                "Paul",
+                "Lennart"
+            ]
+        },
+        {
+            "creditor":"Lennart",
+            "amount":42.19,
+            "currency": 0,
+            "description":"Kaufland-Einkauf 2",
+            "paymentGroup":[
+                "Richard",
+                "Thomas",
+                "Paul",
+                "Lennart"
+            ]
+        },
+        {
+            "creditor":"Lennart",
+            "amount":1280,
+            "currency": 1,
+            "description":"Döner, Pizza",
+            "paymentGroup":[
+                "Richard",
+                "Thomas",
+                "Paul",
+                "Lennart"
+            ]
+        },
+        {
+            "creditor":"Lennart",
+            "amount":28.05,
+            "currency": 0,
+            "description":"Tabak",
+            "paymentGroup":[
+                "Richard",
+                "Thomas",
+                "Paul"
+            ]
+        },
+        {
+            "creditor":"Lennart",
+            "amount":60,
+            "currency": 0,
+            "description":"Benzin",
+            "paymentGroup":[
+                "Richard",
+                "Lennart"
+            ]
         }
     ]
 }

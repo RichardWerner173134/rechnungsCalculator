@@ -22,16 +22,20 @@ public class Main {
     }
 
     public static void main(String[] args) {
-
         new Main();
     }
 
     private void calculate() {
         List<BillCollection> billCollections = calculator.calculateAllBills();
+        printBills(billCollections);
+    }
 
+    private void printBills(List<BillCollection> billCollections) {
         StringBuilder sb = new StringBuilder();
         for(BillCollection bc : billCollections){
             sb.append("Person: ").append(bc.getOwner().getName()).append("\n");
+            sb.append("\tPaying for:\n");
+            bc.getDescriptions().forEach(desc -> sb.append("\t\t- ").append(desc).append("\n"));
             Iterator<Map.Entry<Person, Double>> entries = bc.getBills().entrySet().iterator();
 
             while(entries.hasNext()){
@@ -54,5 +58,30 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        printInvoices();
+    }
+
+    private void printInvoices(){
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Involved Persons: ");
+        invoiceOverview.getInvolvedPersons().forEach(p -> sb.append("\n\t- ").append(p.getName()));
+
+        sb.append("\nTransactions: ");
+
+        int i = 1;
+        for (Transaction transaction : invoiceOverview.getTransactions()) {
+            sb.append("\n\t[" + i + "] ");
+            sb.append("\n\tCreditor: " + transaction.getCreditor().getName());
+            sb.append("\n\tAmount: " + transaction.getAmount() + "€");
+            sb.append("\n\tDescription: " + transaction.getDescription());
+            sb.append("\n\tPaymentGroup: ");
+            ((PaymentGroup) transaction.getPaymentGroup()).getPersonList().forEach(person -> {
+                sb.append("\n\t\t- ").append(person.getName());
+            });
+            sb.append("\n\t------------------------------------------");
+            i++;
+        }
+        System.out.println(sb.toString());
     }
 }
