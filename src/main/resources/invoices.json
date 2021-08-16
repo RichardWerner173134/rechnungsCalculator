@@ -4,6 +4,7 @@
         {
             "creditor":"Richard",
             "amount":147.0,
+            "currency": 0,
             "description":"Zeltplatzgebühren",
             "paymentGroup":[
                 "Richard",
@@ -15,6 +16,7 @@
         {
             "creditor":"Thomas",
             "amount":640.0,
+            "currency": 1,
             "description":"Döner",
             "paymentGroup":[
                 "Richard",
@@ -26,6 +28,7 @@
         {
             "creditor":"Thomas",
             "amount":50.0,
+            "currency": 0,
             "description":"Tanke",
             "paymentGroup":[
                 "Thomas",
@@ -35,6 +38,7 @@
         {
             "creditor":"Paul",
             "amount":20.0,
+            "currency": 0,
             "description":"McDonalds",
             "paymentGroup":[
                 "Thomas",
@@ -44,6 +48,7 @@
         {
             "creditor":"Paul",
             "amount":72.0,
+            "currency": 0,
             "description":"Tanke",
             "paymentGroup":[
                 "Paul",
@@ -53,6 +58,7 @@
         {
             "creditor":"Lennart",
             "amount":1200.0,
+            "currency": 1,
             "description":"Bier Tag 1",
             "paymentGroup":[
                 "Richard",

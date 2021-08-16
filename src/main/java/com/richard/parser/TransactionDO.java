@@ -12,6 +12,7 @@ import java.util.ArrayList;
 class TransactionDO{
     private String creditor;
     private double amount;
+    private int currency;
     private String description;
     private ArrayList<String> paymentGroup;
 }

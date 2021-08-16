@@ -2,6 +2,8 @@ package com.richard.calculating;
 
 import com.richard.collecting.*;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 
 public class Calculator implements ICalculator{
@@ -37,7 +39,8 @@ public class Calculator implements ICalculator{
                 continue;
             }
             BillCollection bc = getBillCollectionForPerson(p);
-            double dividedAmount = amount / paymentGroup.getPersonList().size();
+            double dividedAmount = new BigDecimal(amount / paymentGroup.getPersonList().size())
+                    .setScale(2, RoundingMode.HALF_UP).doubleValue();;
             bc.addPayment(creditor, dividedAmount);
         }
 

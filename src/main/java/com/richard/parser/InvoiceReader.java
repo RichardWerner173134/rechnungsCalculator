@@ -6,13 +6,15 @@ import com.richard.collecting.PaymentGroup;
 import com.richard.collecting.Person;
 import com.richard.collecting.Transaction;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
+import static com.richard.parser.Currency.*;
 
 public class InvoiceReader {
 
@@ -55,6 +57,10 @@ public class InvoiceReader {
 
             // amount fits already
             double amount = t.getAmount();
+
+            if(t.getCurrency() == KC.getId()){
+                amount = CrownsToEuroConverter.crownsToEuros(amount);
+            }
 
             // description fits already
             String description = t.getDescription();
