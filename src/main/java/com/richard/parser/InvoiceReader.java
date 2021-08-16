@@ -2,9 +2,17 @@ package com.richard.parser;
 
 import com.google.gson.Gson;
 import com.richard.collecting.InvoiceOverview;
+import com.richard.collecting.PaymentGroup;
+import com.richard.collecting.Person;
+import com.richard.collecting.Transaction;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class InvoiceReader {
 
@@ -20,17 +28,66 @@ public class InvoiceReader {
 
 
 
-    public InvoiceOverview readAndConvertFile() throws IOException {
+    public void readAndConvertFile() throws IOException {
         String fileContent = readInvoiceFile();
         parseContent(fileContent);
-        return null;
     }
 
     private void parseContent(String fileContent){
         Gson gson = new Gson();
-
         TransactionListDO transactions = gson.fromJson(fileContent, TransactionListDO.class);
-        int x = 0;
+        transformToTransactions(transactions);
+    }
+
+    private void transformToTransactions(TransactionListDO transactionListDO){
+        TransactionDO[] transactions = transactionListDO.getTransactions();
+
+        // convert every json transaction object to a java object and add it to the monitored transactions
+        for (TransactionDO t : transactions) {// convert String creditor from json to Person object
+            Optional<Person> optCreditor = invoiceOverview.getInvolvedPersons().stream()
+                    .filter(k -> k.getName().equals(t.getCreditor()))
+                    .findFirst();
+            Person creditor = optCreditor.orElseGet(() -> {
+                Person person = new Person(t.getCreditor());
+                invoiceOverview.getInvolvedPersons().add(person);
+                return person;
+            });
+
+            // amount fits already
+            double amount = t.getAmount();
+
+            // description fits already
+            String description = t.getDescription();
+
+            // convert List of Strings to PaymentGroup object
+            ArrayList<String> paymentGroupStringList = t.getPaymentGroup();
+            ArrayList<Person> personsForPaymentGroup = new ArrayList<>();
+            for (String personName : paymentGroupStringList) {
+                Optional<Person> optPerson = invoiceOverview.getInvolvedPersons().stream()
+                        .filter(person -> person.getName().equals(personName))
+                        .findFirst();
+                Person newPersonForPaymentGroup;
+                if(optPerson.isPresent()){
+                    newPersonForPaymentGroup = optPerson.get();
+                } else {
+                    newPersonForPaymentGroup = new Person(personName);
+                    invoiceOverview.getInvolvedPersons().add(newPersonForPaymentGroup);
+                }
+                personsForPaymentGroup.add(newPersonForPaymentGroup);
+            }
+            PaymentGroup paymentGroup = invoiceOverview.getPaymentGroupManager().getOrCreatePaymentGroup(personsForPaymentGroup);
+
+            // create a new transaction
+            Transaction transaction = new Transaction(
+                    creditor,
+                    amount,
+                    paymentGroup,
+                    description
+            );
+
+            // add it
+            invoiceOverview.getTransactions().add(transaction);
+        }
     }
 
     private String readInvoiceFile() throws IOException {

@@ -14,17 +14,17 @@ public class Main {
     private InvoiceOverview invoiceOverview;
 
     // create Persons
-    private Person richard = new Person("Richard");
+    /*private Person richard = new Person("Richard");
     private Person thomas = new Person("Thomas");
     private Person paul = new Person("Paul");
     private Person lennart = new Person("Lennart");
     private Person fabian = new Person("Fabian");
-
+*/
     public Main(){
 
         // add all to list
         ArrayList<Person> allPersons = new ArrayList<>();
-        allPersons.add(richard);
+        /*allPersons.add(richard);
         allPersons.add(thomas);
         allPersons.add(paul);
         allPersons.add(lennart);
@@ -36,7 +36,8 @@ public class Main {
                 thomas,
                 fabian,
                 paul
-        ));
+        ));*/
+        invoiceOverview = new InvoiceOverview();
 
         collecting();
 
