@@ -22,7 +22,7 @@ public class Calculator implements ICalculator{
         for(Transaction transaction : invoiceOverview.getTransactions()){
             calculateBill(transaction);
         }
-        summarizeBills();
+        //summarizeBills();
         return billCollections;
     }
 
@@ -60,75 +60,15 @@ public class Calculator implements ICalculator{
     }
 
     private void summarizeBills(){
-        for(BillCollection bc : billCollections){
-            Person p1 = bc.getOwner();
-            Map<Person, Double> bills = bc.getBills();
-            Iterator<Map.Entry<Person, Double>> iterator = bills.entrySet().iterator();
-            while(iterator.hasNext()){
-                Map.Entry<Person, Double> next = iterator.next();
-                Person p2 = next.getKey();
-                Double p1_p2 = next.getValue();
+        // look through every bill of every bc
+        // p1
+        // p2 = p1.bc.bill1.creditor
+        // p1_p2 = p1.bc.bill1.amount
 
-                // get the corresponding billCollection
-                BillCollection bcInner = null;
-                for(BillCollection bcSearch : billCollections){
-                    if(bcSearch.getOwner() == p2){
-                        bcInner = bcSearch;
-                        break;
-                    }
-                }
+        // look through every bill of p2, where creditor is p1
+        // p2_p1 = p2.bc.bill3.amount
 
-                if(bcInner == null){
-                    return;
-                }
-
-                Map<Person, Double> correspondingBills = bcInner.getBills();
-                Iterator<Map.Entry<Person, Double>> iterator1 = correspondingBills.entrySet().iterator();
-                double p2_p1 = 0;
-                while(iterator1.hasNext()){
-                    Map.Entry<Person, Double> next1 = iterator1.next();
-                    if(next1.getKey() == p1) {
-                        p2_p1 = next1.getValue();
-                        break;
-                    }
-                }
-                adoptBills(p1, p2, p1_p2, p2_p1);
-            }
-        }
-    }
-
-    private void adoptBills(Person p1, Person p2, double p1_p2, double p2_p1){
-        BillCollection billCollectionP1 = getBillCollectionForPerson(p1);
-        BillCollection billCollectionP2 = getBillCollectionForPerson(p2);
-
-        if(p1_p2 == p2_p1){
-            // remove both bills
-            billCollectionP1.removeBillForPerson(p2);
-            billCollectionP2.removeBillForPerson(p1);
-        }
-
-        if(p1_p2 == 0) {
-            // remove bill from p1
-            billCollectionP1.removeBillForPerson(p2);
-        }
-
-        if(p2_p1 == 0){
-            // remove bill from p2
-            billCollectionP2.removeBillForPerson(p1);
-        }
-
-        if(p1_p2 < p2_p1){
-            // remove bill from p1
-            // reduce bill from p2 by p1_p2
-            billCollectionP1.removeBillForPerson(p2);
-            billCollectionP2.reduceBillForPerson(p1, p1_p2);
-        }
-
-        if(p2_p1 < p1_p2){
-            // remove bill from p2
-            // reduce bill from p1 by p2_p1
-            billCollectionP2.removeBillForPerson(p1);
-            billCollectionP1.reduceBillForPerson(p2, p2_p1);
-        }
+        BillSummarizer billSummarizer = new BillSummarizer(billCollections);
+        billCollections = billSummarizer.summarizeBills();
     }
 }

@@ -6,6 +6,8 @@ import com.richard.collecting.*;
 import com.richard.parser.InvoiceReader;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 
 public class Main {
@@ -73,7 +75,7 @@ public class Main {
         for (Transaction transaction : invoiceOverview.getTransactions()) {
             sb.append("\n\t[" + i + "] ");
             sb.append("\n\tCreditor: " + transaction.getCreditor().getName());
-            sb.append("\n\tAmount: " + transaction.getAmount() + "€");
+            sb.append("\n\tAmount: " + new BigDecimal(transaction.getAmount()).setScale(2, RoundingMode.HALF_UP).toString() + "€");
             sb.append("\n\tDescription: " + transaction.getDescription());
             sb.append("\n\tPaymentGroup: ");
             ((PaymentGroup) transaction.getPaymentGroup()).getPersonList().forEach(person -> {
