@@ -22,7 +22,6 @@ public class Calculator implements ICalculator{
         for(Transaction transaction : invoiceOverview.getTransactions()){
             calculateBill(transaction);
         }
-        //summarizeBills();
         return billCollections;
     }
 
@@ -57,18 +56,5 @@ public class Calculator implements ICalculator{
             return newBillCollection1;
         });
 
-    }
-
-    private void summarizeBills(){
-        // look through every bill of every bc
-        // p1
-        // p2 = p1.bc.bill1.creditor
-        // p1_p2 = p1.bc.bill1.amount
-
-        // look through every bill of p2, where creditor is p1
-        // p2_p1 = p2.bc.bill3.amount
-
-        BillSummarizer billSummarizer = new BillSummarizer(billCollections);
-        billCollections = billSummarizer.summarizeBills();
     }
 }

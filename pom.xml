@@ -70,7 +70,7 @@
                         <index>true</index>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass> Main</mainClass>
+                            <mainClass>com.richard.Main</mainClass>
                         </manifest>
                         <manifestEntries>
                             <mode>development</mode>

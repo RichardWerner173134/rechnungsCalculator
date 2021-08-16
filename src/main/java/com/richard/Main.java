@@ -2,6 +2,7 @@ package com.richard;
 
 import com.richard.calculating.BillCollection;
 import com.richard.calculating.Calculator;
+import com.richard.calculating.BillPair;
 import com.richard.collecting.*;
 import com.richard.parser.InvoiceReader;
 
@@ -34,6 +35,9 @@ public class Main {
 
     private void printBills(List<BillCollection> billCollections) {
         StringBuilder sb = new StringBuilder();
+
+        BillPair.getSummarizedStuff(billCollections);
+
         for(BillCollection bc : billCollections){
             sb.append("Person: ").append(bc.getOwner().getName()).append("\n");
             sb.append("\tPaying for:\n");
@@ -43,9 +47,12 @@ public class Main {
             while(entries.hasNext()){
                 Map.Entry<Person, Double> next = entries.next();
                 Person key = next.getKey();
-                Double value = next.getValue();
+
+                BillPair billPair = BillPair.getBillPairForPersons(bc.getOwner(), key);
+                double amountForPerson = billPair.getAmountForPerson(bc.getOwner());
                 sb.append("\tTo: ").append(key.getName());
-                sb.append(", value: ").append(value).append("€");
+                sb.append(", value: ").append(amountForPerson).append("€");
+                //sb.append(", value: ").append(value).append("€");
                 sb.append("\n");
             }
         }
