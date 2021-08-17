@@ -25,6 +25,16 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" ______     _____   ________   _______              _________   _______      _____   _______                   _____     __    \n" +
+                "|_   _ \\   |_   _| |_   __  | |_   __ \\            |  _   _  | |_   __ \\    |_   _| |_   __ \\                 / ___ `.  /  |   \n" +
+                "  | |_) |    | |     | |_ \\_|   | |__) |           |_/ | | \\_|   | |__) |     | |     | |__) |               |_/___) |  `| |   \n" +
+                "  |  __'.    | |     |  _| _    |  __ /                | |       |  __ /      | |     |  ___/                 .'____.'   | |   \n" +
+                " _| |__) |  _| |_   _| |__/ |  _| |  \\ \\_             _| |_     _| |  \\ \\_   _| |_   _| |_                   / /_____   _| |_  \n" +
+                "|_______/  |_____| |________| |____| |___|           |_____|   |____| |___| |_____| |_____|                  |_______| |_____| \n" +
+                "                                                                                                                               ");
+
+        System.out.println(sb.toString());
         new Main();
     }
 
@@ -35,24 +45,25 @@ public class Main {
 
     private void printBills(List<BillCollection> billCollections) {
         StringBuilder sb = new StringBuilder();
-
+        sb.append("\nBills: ");
         BillPair.getSummarizedStuff(billCollections);
 
         for(BillCollection bc : billCollections){
-            sb.append("Person: ").append(bc.getOwner().getName()).append("\n");
-            sb.append("\tPaying for:\n");
-            bc.getDescriptions().forEach(desc -> sb.append("\t\t- ").append(desc).append("\n"));
+            sb.append("\n\t==========================================");
+            sb.append("\n\tPerson: ").append(bc.getOwner().getName()).append("\n");
+            sb.append("\t\tPaying for:\n");
+            bc.getDescriptions().forEach(desc -> sb.append("\t\t\t- ").append(desc).append("\n"));
             Iterator<Map.Entry<Person, Double>> entries = bc.getBills().entrySet().iterator();
 
             while(entries.hasNext()){
                 Map.Entry<Person, Double> next = entries.next();
                 Person key = next.getKey();
-
                 BillPair billPair = BillPair.getBillPairForPersons(bc.getOwner(), key);
                 double amountForPerson = billPair.getAmountForPerson(bc.getOwner());
-                sb.append("\tTo: ").append(key.getName());
+
+                sb.append("\n\t\tTo: ").append(key.getName());
                 sb.append(", value: ").append(amountForPerson).append("€");
-                //sb.append(", value: ").append(value).append("€");
+                sb.append("\n\t------------------------------------------");
                 sb.append("\n");
             }
         }

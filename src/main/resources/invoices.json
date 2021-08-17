@@ -15,18 +15,6 @@
         },
         {
             "creditor":"Thomas",
-            "amount":640.0,
-            "currency": 1,
-            "description":"Döner",
-            "paymentGroup":[
-                "Richard",
-                "Thomas",
-                "Paul",
-                "Lennart"
-            ]
-        },
-        {
-            "creditor":"Thomas",
             "amount":50.0,
             "currency": 0,
             "description":"Tanke",
